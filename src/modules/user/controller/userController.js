@@ -1,5 +1,5 @@
 import { ErrorHandler, TryCatch } from "../../../../utilty/utility.js";
-import { sendToken } from "../../../../utilty/features.js";
+import { cookieOption, sendToken } from "../../../../utilty/features.js";
 import jwt from "jsonwebtoken"
 import {
   findUserByEmail,
@@ -46,7 +46,7 @@ export const loginUser = TryCatch(async (req, res, next) => {
 export const handleLogout = TryCatch(async (req, res, next) => {
   return res
     .status(200)
-    .cookie("authToken", "", { maxAge: 0 })
+    .cookie("authToken", "", { ...cookieOption, maxAge: 0 })
     .json({
       success: true,
       message: "Logged out successfully",

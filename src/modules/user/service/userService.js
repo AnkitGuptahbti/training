@@ -6,7 +6,7 @@ export const findUserByEmail = async (email) => {
 
 export const createUser = async (username, email, password,role) => {
   const hashedPassword = await bcrypt.hash(password, 10);
-  return await User.create({ username, email, passwordHash: hashedPassword ,role:role||"user"});
+  return await User.create({ username, email, passwordHash: hashedPassword ,role:role||"USER"});
 };
 
 export const validateUserPassword = async (user, password) => {

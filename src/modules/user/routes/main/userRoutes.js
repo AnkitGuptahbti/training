@@ -6,6 +6,7 @@ import getAllUsersRoute from "../getAllUsersRoute.js"
 import resetPasswordRoute from "../resetPasswordRoute.js";
 import verifyEmailRoute from "../verifyEmailRoute.js";
 import deleteUserRoute from "../deleteUserRoute.js";
+import logoutRoute from "../logoutRoute.js"
 import { isAdmin, isAuthenticated, isAuthorized ,} from "../../../../../middleware/auth.js";
 import { cacheMiddleware } from "../../controller/userController.js";
 
@@ -13,6 +14,7 @@ import { cacheMiddleware } from "../../controller/userController.js";
 const router = express.Router();
 router.use("/signup", signupRoute);
 router.use("/login", loginRoute);
+router.use('/logout',logoutRoute)
 router.use(isAuthenticated);
 router.use("/get-all-users", isAuthorized(["USER", "EMPLOYEE", "ADMIN"]),getAllUsersRoute);
 router.use("/change-password",changePasswordRoute);
