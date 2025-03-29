@@ -67,3 +67,45 @@ const PORT = process.env.PORT || 5000; // Use provided port or default to 5000
 server.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
+
+
+
+
+// 4rth aspect Live Notifications	✅ Yes (Pub/Sub)	✅ Yes	❌ No
+
+
+// The fourth item in your table is Live Notifications, which is achieved using Redis (Pub/Sub) and Socket.io.
+
+// Since you've already tested Redis Pub/Sub with Socket.io, you can now verify if notifications are being broadcasted properly across multiple connected clients.
+
+// Testing Live Notifications
+// Ensure Two Clients Are Connected
+
+// Open two Postman WebSocket connections, one to localhost:5000 and another to localhost:5001.
+
+// Both should establish a WebSocket connection.
+
+// Send a Notification (Event) from One Client
+
+// In Postman, enter a message in JSON format, such as:
+
+// json
+// Copy
+// Edit
+// {
+//   "message": "Hello from Client 1!"
+// }
+// Select sendMessage as the event name and click Send.
+
+// Observe Backend Logs & Other Client's Response
+
+// In your terminal running the backend, you should see:
+
+// css
+// Copy
+// Edit
+// 📤 Publishing message to Redis: { "message": "Hello from Client 1!" }
+// 📩 Received message from Redis channel notifications: { "message": "Hello from Client 1!" }
+// The second connected Postman client should receive the message.
+
+// This confirms live notifications are working across multiple servers using Redis Pub/Sub and Socket.io.
