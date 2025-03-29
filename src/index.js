@@ -10,6 +10,8 @@ import cors from "cors";
 import { connectDB } from "../database/conn.js";
 import { errorMiddleware } from "../utilty/utility.js";
 import userRoutes from './modules/user/routes/main/userRoutes.js'
+import { connectRabbitMQ } from "../services/rabbitMQClient.js";
+import emailQueueRoutes from "./modules/user/routes/emailQueue.js";
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -28,6 +30,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // We have one API (/api/um/users) with seven endpoints handling authentication, user management, and security features."
+
+// one endpoint in thi api router.use("/",sendEmailRoute)//=>>>> this if for redis+bullmq //Background task(Task Queue) for sending email
 app.use("/api/um/users", userRoutes);
 
 app.get("/", (req, res) => {
@@ -35,6 +39,15 @@ app.get("/", (req, res) => {
     message:"Server is Running"
   });
 });
+
+
+//Background task(Task Queue) for sending email
+//this if for rabbitmq 
+connectRabbitMQ(); // Initialize RabbitMQ Connection
+app.use("/api", emailQueueRoutes);
+
+// paralley run in another terminal node workers/emailWorker.js => this is consumer so we can use rabbitmq  for background task  for sending email
+//  node workers/emailWorker.js => this is consumer
 
 
 app.use(errorMiddleware);

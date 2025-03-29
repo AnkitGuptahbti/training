@@ -11,6 +11,7 @@ import {
 } from "../service/userService.js";
 import User from "../model/userModel.js";
 import redis from "../../../../services/redisClient.js";
+import { addEmailJob } from "../../../../services/jobQueue.js";
 
 export const registerUser = TryCatch(async (req, res, next) => {
   console.log("registerUser");
@@ -230,4 +231,11 @@ export const cacheMiddleware = async (req, res, next) => {
 
 export const setCache = async (key, data, expiry = 3600) => {
   await redis.set(key, JSON.stringify(data), "EX", expiry);
+};
+
+
+export const sendEmail = async (req, res) => {
+    const { to, subject, body } = req.body;
+    await addEmailJob(to, subject, body);
+    res.json({ message: "Email job added to queue" });
 };

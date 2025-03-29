@@ -8,10 +8,12 @@ import verifyEmailRoute from "../verifyEmailRoute.js";
 import deleteUserRoute from "../deleteUserRoute.js";
 import logoutRoute from "../logoutRoute.js"
 import { isAdmin, isAuthenticated, isAuthorized ,} from "../../../../../middleware/auth.js";
-import { cacheMiddleware } from "../../controller/userController.js";
+// import { cacheMiddleware } from "../../controller/userController.js";
+import sendEmailRoute from "../sendEmailRoute.js";
 
 
 const router = express.Router();
+router.use("/",sendEmailRoute)//=>>>> this if for redis+bullmq
 router.use("/signup", signupRoute);
 router.use("/login", loginRoute);
 router.use('/logout',logoutRoute)
@@ -22,5 +24,6 @@ router.use("/",resetPasswordRoute)
 router.use("/", verifyEmailRoute)
 // router.use("/",isAdmin,deleteUserRoute)
 router.use("/",isAdmin,deleteUserRoute)
+
 
 export default router;
