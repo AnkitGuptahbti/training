@@ -23,6 +23,27 @@
 // PORT=5000 node src/indexsocketredispubsub.js
 // PORT=5001 node src/indexsocketredispubsub.js
 
+
+
+//********************************************************** *//
+// Redis Pub/Sub Events
+// The subClient.on("message", (channel, message) => {...}) is listening for the "message" event that Redis emits when it sends a message to a subscribed channel.
+
+// In Redis, Pub/Sub (Publish/Subscribe) is a messaging pattern where publishers send messages to a channel, and subscribers listen to those channels.
+
+// When the subClient subscribes to a channel (like "notifications" in your case), it listens for the "message" event which Redis triggers when a new message is published on that channel.
+
+// Redis and the "message" Event
+// The "message" event is built into the Redis client to handle messages received from channels to which the client is subscribed.
+
+// When you use subClient.on("message", callback), this callback is executed every time a message is published to the "notifications" channel.
+
+// channel represents the name of the Redis channel.
+
+// message contains the actual data sent through that channel.
+
+
+//************************************************************************************ *//
 import express from "express";
 import { Server } from "socket.io";
 import http from "http";
