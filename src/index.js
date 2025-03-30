@@ -12,6 +12,7 @@ import { errorMiddleware } from "../utilty/utility.js";
 import userRoutes from './modules/user/routes/main/userRoutes.js'
 import { connectRabbitMQ } from "../services/rabbitMQClient.js";
 import emailQueueRoutes from "./modules/user/routes/emailQueue.js";
+import rateLimiter from "../middleware/rateLimiter.js";
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -28,6 +29,7 @@ connectDB(process.env.MONGO_URI);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(rateLimiter); // Apply rate limiter globally
 
 // We have one API (/api/um/users) with seven endpoints handling authentication, user management, and security features."
 
